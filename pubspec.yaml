@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  built_redux: ^7.5.6
+  video_player: ^0.10.2+5
 
 dev_dependencies:
   flutter_test:
