@@ -1,26 +1,40 @@
+import 'package:built_redux/built_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_built_redux/flutter_built_redux.dart';
+import 'package:video_feed/actions/actions.dart';
+import 'package:video_feed/models/app_state.dart';
+import 'package:video_feed/reducers/reducers.dart';
+import 'package:video_feed/video_list_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(VideoFeedApp());
 
-class MyApp extends StatelessWidget {
+class VideoFeedApp extends StatefulWidget {
+  final store = Store<AppState, AppStateBuilder, AppActions>(
+    reducerBuilder.build(),
+    AppState(),
+    AppActions()
+  );
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Video Feed',
-      home: MyHomePage(),
-    );
+  _VideoFeedAppState createState() => _VideoFeedAppState();
+}
+
+class _VideoFeedAppState extends State<VideoFeedApp> {
+  Store<AppState, AppStateBuilder, AppActions> store;
+
+  @override
+  void initState() {
+    store = widget.store;
+    super.initState();
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ReduxProvider(
+      store: store,
+      child: MaterialApp(
+        home: VideoListScreen(),
+      ),
+    );
   }
 }

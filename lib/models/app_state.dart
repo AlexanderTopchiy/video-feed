@@ -10,5 +10,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   AppState._();
 
   static Serializer<AppState> get serializer => _$appStateSerializer;
-  factory AppState([updates(AppStateBuilder b)]) => _$AppState();
+  factory AppState([updates(AppStateBuilder b)]) => _$AppState((b) => b
+    ..isPlaying = false
+  );
 }

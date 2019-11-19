@@ -15,6 +15,7 @@ dependencies:
   built_redux: ^7.4.5
   built_value: ^6.3.1
   built_collection: ^4.1.0
+  flutter_built_redux: ^0.6.0
 
 dev_dependencies:
   flutter_test:
