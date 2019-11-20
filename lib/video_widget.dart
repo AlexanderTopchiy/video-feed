@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,12 +15,18 @@ class VideoWidget extends StatefulWidget {
 
 class _VideoWidgetState extends State<VideoWidget> {
   VideoPlayerController _videoPlayerController;
+  ChewieController _chewieController;
   Future _initVideoPlayer;
 
   @override
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.network(widget.urlSource);
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: 3/2,
+      looping: true,
+    );
     _initVideoPlayer = _videoPlayerController
         .initialize()
         .then((_) {
@@ -27,9 +34,8 @@ class _VideoWidgetState extends State<VideoWidget> {
         });
 
     if (widget.isPlaying) {
-      _videoPlayerController.play();
-      _videoPlayerController.setLooping(true);
-      _videoPlayerController.setVolume(widget.volume);
+      _chewieController.play();
+      _chewieController.setVolume(widget.volume);
     }
   }
 
@@ -37,11 +43,10 @@ class _VideoWidgetState extends State<VideoWidget> {
   void didUpdateWidget(VideoWidget oldWidget) {
     if (oldWidget.isPlaying != widget.isPlaying) {
       if (widget.isPlaying) {
-        _videoPlayerController.play();
-        _videoPlayerController.setLooping(true);
-        _videoPlayerController.setVolume(widget.volume);
+        _chewieController.play();
+        _chewieController.setVolume(widget.volume);
       } else {
-        _videoPlayerController.pause();
+        _chewieController.pause();
       }
     }
     super.didUpdateWidget(oldWidget);
@@ -50,6 +55,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -59,7 +65,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       future: _initVideoPlayer,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return VideoPlayer(_videoPlayerController);
+          return Chewie(controller: _chewieController);
         } else {
           return Center(child: CircularProgressIndicator());
         }

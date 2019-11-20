@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_built_redux/flutter_built_redux.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:video_feed/video_widget.dart';
 
