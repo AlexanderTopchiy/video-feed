@@ -4,8 +4,9 @@ import 'package:video_player/video_player.dart';
 class VideoWidget extends StatefulWidget {
   final String urlSource;
   final bool isPlaying;
+  final double volume;
 
-  VideoWidget({@required this.urlSource, @required this.isPlaying});
+  VideoWidget({@required this.urlSource, @required this.isPlaying, this.volume});
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -28,6 +29,7 @@ class _VideoWidgetState extends State<VideoWidget> {
     if (widget.isPlaying) {
       _videoPlayerController.play();
       _videoPlayerController.setLooping(true);
+      _videoPlayerController.setVolume(widget.volume);
     }
   }
 
@@ -37,6 +39,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       if (widget.isPlaying) {
         _videoPlayerController.play();
         _videoPlayerController.setLooping(true);
+        _videoPlayerController.setVolume(widget.volume);
       } else {
         _videoPlayerController.pause();
       }
